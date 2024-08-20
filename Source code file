@@ -1,0 +1,245 @@
+Drug:
+
+/*package com.pharma.model;
+
+public class Drug {
+    private String drugID;
+    private String name;
+    private String manufacturer;
+    private String expiryDate;
+    private String manufacturingDate; // New field
+
+    public Drug(String drugID, String name, String manufacturer, String manufacturingDate, String expiryDate) {
+        this.drugID = drugID;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.expiryDate = expiryDate;
+        this.manufacturingDate = manufacturingDate;
+    }
+
+    public String getDrugID() {
+        return drugID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public String getManufacturingDate() {
+        return manufacturingDate;
+    }
+
+    @Override
+    public String toString() {
+        return "DrugID: " + drugID + ", Name: " + name + ", Manufacturer: " + manufacturer +
+               ", Manufacturing Date: " + manufacturingDate + ", Expiry Date: " + expiryDate;
+    }
+}*/
+
+Participant:
+
+/*package com.pharma.model;
+
+public class Participant {
+    private String participantID;
+    private String name;
+    private String role; // Manufacturer, Distributor, or Pharmacy
+    private String contact; // New field
+
+    public Participant(String participantID, String name, String role, String contact) {
+        this.participantID = participantID;
+        this.name = name;
+        this.role = role;
+        this.contact = contact;
+    }
+
+    public String getParticipantID() {
+        return participantID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    @Override
+    public String toString() {
+        return "ParticipantID: " + participantID + ", Name: " + name + ", Role: " + role + ", Contact: " + contact;
+    }
+}*/
+
+Transaction:
+
+/*package com.pharma.model;
+
+import java.util.Date;
+
+public class Transaction {
+    private String transactionID;
+    private Drug drug;
+    private Participant sender;
+    private Participant receiver;
+    private Date date;
+
+    public Transaction(String transactionID, Drug drug, Participant sender, Participant receiver, Date date) {
+        this.transactionID = transactionID;
+        this.drug = drug;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.date = date;
+    }
+
+    public String getTransactionID() {
+        return transactionID;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public Participant getSender() {
+        return sender;
+    }
+
+    public Participant getReceiver() {
+        return receiver;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionID: " + transactionID +
+                ", Drug: " + drug.toString() +
+                ", Sender: " + sender.toString() +
+                ", Receiver: " + receiver.toString() +
+                ", Date: " + date;
+    }
+}*/
+
+SupplyChainContract:
+
+/*package com.pharma.contract;
+
+import com.pharma.model.Drug;
+import com.pharma.model.Participant;
+import com.pharma.model.Transaction;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class SupplyChainContract {
+    private List<Transaction> transactionLedger = new ArrayList<>();
+
+    public void addTransaction(Drug drug, Participant sender, Participant receiver) {
+        String transactionID = "TXN" + (transactionLedger.size() + 1);
+        Date transactionDate = new Date();
+        Transaction transaction = new Transaction(transactionID, drug, sender, receiver, transactionDate);
+        transactionLedger.add(transaction);
+        System.out.println("Transaction added: " + transaction);
+    }
+
+    public void viewLedger() {
+        System.out.println("Supply Chain Ledger:");
+        for (Transaction txn : transactionLedger) {
+            System.out.println(txn);
+        }
+    }
+}*/
+
+
+Main code:
+
+/*package com.pharma.chain;
+
+import com.pharma.contract.SupplyChainContract;
+import com.pharma.model.Drug;
+import com.pharma.model.Participant;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        SupplyChainContract contract = new SupplyChainContract();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Add Transaction");
+            System.out.println("2. View Ledger");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Drug ID: ");
+                    String drugID = scanner.nextLine();
+                    System.out.print("Enter Drug Name: ");
+                    String drugName = scanner.nextLine();
+                    System.out.print("Enter Manufacturer: ");
+                    String manufacturer = scanner.nextLine();
+                    System.out.print("Enter Manufacturing Date (YYYY-MM-DD): "); // New input
+                    String manufacturingDate = scanner.nextLine();
+                    System.out.print("Enter Expiry Date (YYYY-MM-DD): ");
+                    String expiryDate = scanner.nextLine();
+
+                    Drug drug = new Drug(drugID, drugName, manufacturer, manufacturingDate, expiryDate);
+
+                    System.out.print("Enter Sender Participant ID: ");
+                    String senderID = scanner.nextLine();
+                    System.out.print("Enter Sender Name: ");
+                    String senderName = scanner.nextLine();
+                    System.out.print("Enter Sender Role (Manufacturer/Distributor/Pharmacy): ");
+                    String senderRole = scanner.nextLine();
+                    System.out.print("Enter Sender Contact: "); // New input
+                    String senderContact = scanner.nextLine();
+
+                    Participant sender = new Participant(senderID, senderName, senderRole, senderContact);
+
+                    System.out.print("Enter Receiver Participant ID: ");
+                    String receiverID = scanner.nextLine();
+                    System.out.print("Enter Receiver Name: ");
+                    String receiverName = scanner.nextLine();
+                    System.out.print("Enter Receiver Role (Manufacturer/Distributor/Pharmacy): ");
+                    String receiverRole = scanner.nextLine();
+                    System.out.print("Enter Receiver Contact: "); // New input
+                    String receiverContact = scanner.nextLine();
+
+                    Participant receiver = new Participant(receiverID, receiverName, receiverRole, receiverContact);
+
+                    contract.addTransaction(drug, sender, receiver);
+                    break;
+
+                case 2:
+                    contract.viewLedger();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}*/
